@@ -1,0 +1,147 @@
+* {
+  padding: 0%;
+  margin: 0%;
+}
+h1{
+    text-align: center;
+    font-size: 60px;
+    margin-top: 20px;
+}
+.container{
+    padding-top: 10px;
+    margin-top: 50px;
+    border:1px solid gray;
+    height:200px;
+    width: 1500px;
+}
+h2{
+    margin-left: 110px;
+    margin-top: 10px;
+}
+#task{
+    text-align: center;
+}
+#table {
+    margin: 0 auto; 
+    border-collapse: collapse;
+} 
+#input,taskbut{
+text-align: center;
+margin-left: 550px;
+margin-bottom: 20px;
+}
+    
+#taskbut {
+  background-color: #6A5D4C;
+  border-radius: 15px;
+  height: 30px;
+  width: 70px;
+}
+#table th,
+#table td {
+  padding: 10px;
+  text-align: center;
+}
+.delete-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.complete-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#taskbut:hover,
+#new-quote:hover {
+  background-color: #8D7B68;
+  color: white;
+  cursor: pointer;
+  transform: scale(1.05);
+  transition: all 0.3s ease;
+}
+
+#toggleLabel {
+  font-weight: 600;
+  transition: color 0.5s ease;
+}
+body:not(.dark-mode) #toggleLabel {
+  color: black;
+}
+body.dark-mode #toggleLabel {
+  color: black;
+}
+.completed {
+  text-decoration: line-through;
+  color: gray;
+}
+@media (max-width: 768px) {
+  h1 {
+    font-size: 40px;
+  }
+
+  .container {
+    width: 90%;
+    height: auto;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  #input {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+
+  #taskbut {
+    display: block;
+    margin: 10px auto;
+  }
+
+  #table {
+    width: 100%;
+  }
+
+  h2 {
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 30px;
+  }
+
+  h2 {
+    font-size: 20px;
+    margin-left: 10px;
+  }
+
+  .container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  #input {
+    width: 90%;
+  }
+
+  #taskbut {
+    width: 100px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .delete-btn,
+  .complete-btn {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+}
