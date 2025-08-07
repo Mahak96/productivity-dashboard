@@ -2,6 +2,22 @@ h1{
     text-align: center;
     font-size: 80px;
 }
+ body{
+    background-color: #F8F8F8;
+  }
+body.dark-mode #floatingTextarea2:hover {
+    cursor:context-menu;
+
+  }
+  footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  text-align: right;
+  background-color: #f8f9fa; 
+  padding: 10px; 
+}
 @media (max-width: 768px) {
   h1 {
     font-size: 40px;

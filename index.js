@@ -1,23 +1,26 @@
 let greeting = document.getElementById("greeting");
-// let body = document.querySelector("body");
 let quote = document.getElementById("quote");
 let QuoteBtn = document.getElementById("new-quote");
-let btn = document.getElementById("toggle");
 let body = document.body;
+let tasksList = document.getElementById("tasks");
+let input = document.getElementById("input");
+let addBtn = document.getElementById("taskbut");
 
-//greeting
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+// Greeting based on time
 let date = new Date();
-console.log(date);
 let hours = date.getHours();
-console.log(hours);
+
 if (hours >= 0 && hours < 12) {
-  greeting.innerHTML = "☀️ GOOD MORNING"
+  greeting.innerHTML = "☀️ GOOD MORNING";
 } else if (hours >= 12 && hours < 18) {
-  greeting.innerHTML = "🌤️ GOOD AFTERNOON"
+  greeting.innerHTML = "🌤️ GOOD AFTERNOON";
 } else {
-  greeting.innerHTML = "🌙 GOOD EVENING"
+  greeting.innerHTML = "🌙 GOOD EVENING";
 }
-//quote generator
+
+// Quotes
 const quotesArray = [
   "Push yourself, because no one else is going to do it for you.",
   "Success doesn’t just find you. You have to go out and get it.",
@@ -30,22 +33,14 @@ const quotesArray = [
   "Dream big. Work hard. Stay focused.",
   "Discipline is the bridge between goals and accomplishment."
 ];
+
 function showRandomQuote() {
   let index = Math.floor(Math.random() * quotesArray.length);
   quote.innerText = quotesArray[index];
 }
-
 QuoteBtn.addEventListener("click", showRandomQuote);
 
-//task add
-let tableBody = document.querySelector("#table tbody");
-let addBtn = document.getElementById("taskbut");
-
-
-
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-loadTasksFromStorage();
-
+// Add Task
 addBtn.addEventListener("click", function () {
   let taskText = input.value.trim();
   if (taskText === "") return;
@@ -54,71 +49,47 @@ addBtn.addEventListener("click", function () {
   tasks.push(taskObj);
   localStorage.setItem("tasks", JSON.stringify(tasks));
 
-  addTaskToTable(taskObj);
+  addTaskToList(taskObj);
   input.value = "";
 });
 
-function addTaskToTable(taskObj, index = tasks.length - 1) {
-  let newRow = document.createElement("tr");
-  newRow.innerHTML = `
-    <td class="${taskObj.completed ? 'completed' : ''}">${taskObj.task}</td>
-    <td><button class="delete-btn">🗑️</button></td>
-    <td><button class="complete-btn">✔️</button></td>
-  `;
-  tableBody.appendChild(newRow);
+function addTaskToList(taskObj, index = tasks.length - 1) {
+  let newItem = document.createElement("li");
+  newItem.className = "list-group-item";
 
-  // Delete Button
-  newRow.querySelector(".delete-btn").addEventListener("click", function () {
-    newRow.remove();
+  newItem.innerHTML = `
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        <input type="checkbox" class="complete-checkbox" ${taskObj.completed ? "checked" : ""}> ${taskObj.task}
+      </div>
+     <button class="btn btn-sm delete-btn">🗑️</button>
+    </div>`;
+
+  // Delete task
+  newItem.querySelector(".delete-btn").addEventListener("click", function () {
+    newItem.remove();
     tasks.splice(index, 1);
     localStorage.setItem("tasks", JSON.stringify(tasks));
+    reloadTasks(); // optional to refresh the order
   });
 
-  // Complete Button
-  newRow.querySelector(".complete-btn").addEventListener("click", function () {
-    let taskCell = newRow.querySelector("td");
-    taskCell.classList.toggle("completed");
-
-
-    tasks[index].completed = !tasks[index].completed;
+  // Mark complete
+  newItem.querySelector(".complete-checkbox").addEventListener("change", function (e) {
+    tasks[index].completed = e.target.checked;
     localStorage.setItem("tasks", JSON.stringify(tasks));
   });
+
+  tasksList.appendChild(newItem);
 }
 
 function loadTasksFromStorage() {
-  tasks.forEach((taskObj, index) => {
-    addTaskToTable(taskObj, index);
-  });
+  tasksList.innerHTML = ""; // Clear old
+  tasks.forEach((taskObj, index) => addTaskToList(taskObj, index));
 }
 
-//toggle button
-// let toggleSwitch = document.getElementById("checkNativeSwitch");
-// let toggleLabel = document.getElementById("toggleLabel");
+function reloadTasks() {
+  loadTasksFromStorage(); // Simple wrapper
+}
 
-// toggleSwitch.addEventListener("change", () => {
-//   if (toggleSwitch.checked) {
-//     // Apply dark mode
-//     body.classList.add("dark-mode");
-//     body.style.backgroundColor = "black";
-//     body.style.color = "white";
-//     quote.style.color = "white";
-//     greeting.style.color = "white";
-//     toggleLabel.textContent = "Light Mode";
-//     toggleLabel.classList.remove("text-dark");
-//     toggleLabel.classList.add("text-light");
-//     toggleLabel.style.color = "white";
-//   } else {
-//     // Light mode
-//     body.classList.remove("dark-mode");
-//     body.style.backgroundColor = "white";
-//     body.style.color = "black";
-//     quote.style.color = "black";
-//     greeting.style.color = "black";
-//     toggleLabel.textContent = "Dark Mode";
-//     toggleLabel.classList.remove("text-light");
-//     toggleLabel.classList.add("text-dark");
-//     toggleLabel.style.color = "black";
-//   }
-// });
-
-
+// Initial Load
+loadTasksFromStorage();

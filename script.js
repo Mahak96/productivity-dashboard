@@ -1,7 +1,9 @@
+document.addEventListener("DOMContentLoaded", () => {
 
 let toggleSwitch = document.getElementById("checkNativeSwitch");
 let toggleLabel = document.getElementById("toggleLabel");
 let list = document.getElementsByClassName("list-group-item");
+quote=document.getElementById("quote")
 body = document.body;
 textarea = document.getElementById("floatingTextarea2");
 window.onload = () => {
@@ -34,7 +36,7 @@ function enableDarkMode() {
 
 function disableDarkMode() {
   body.classList.remove("dark-mode", "bg-dark", "text-light");
-  body.style.backgroundColor = "white";
+  body.style.backgroundColor = "#F8F8F8";
   body.style.color = "black";
   toggleLabel.textContent = "Dark Mode";
   toggleLabel.classList.remove("text-light");
@@ -42,4 +44,6 @@ function disableDarkMode() {
   toggleLabel.style.color = "black";
   if (textarea) textarea.style.backgroundColor = "white";
   localStorage.setItem("darkMode", "false");
+
 }
+});
