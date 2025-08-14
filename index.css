@@ -93,7 +93,9 @@ body:not(.dark-mode) #toggleLabel {
 body.dark-mode #toggleLabel {
   color: black;
 }
-
+body.dark-mode #navbar{
+  color:black;
+}
 .completed {
   text-decoration: line-through;
   color: gray;
